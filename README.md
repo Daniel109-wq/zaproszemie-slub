@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Zaproszenie Ślubne</title>
 
 <style>
@@ -14,26 +13,24 @@
 }
 
 body{
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
     overflow:hidden;
-    font-family:Arial, sans-serif;
+    font-family:Georgia, serif;
 }
 
-/* Film w tle */
+/* FILM W TLE */
 #bg-video{
     position:fixed;
-    top:0;
-    left:0;
+    inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
     z-index:-2;
 }
 
-/* Przyciemnienie filmu */
 .overlay{
     position:fixed;
     inset:0;
@@ -41,112 +38,127 @@ body{
     z-index:-1;
 }
 
+/* GŁÓWNY BLOK */
 .container{
     position:relative;
-    width:350px;
-    height:230px;
-    cursor:pointer;
+    width:420px;
+    height:500px;
 }
 
-/* Koperta */
+/* ZAPROSZENIE */
+.card{
+    position:absolute;
+    left:50%;
+    bottom:120px;
+    width:320px;
+    height:450px;
+    transform:translateX(-50%) translateY(240px);
+    background:url("zaproszenie.jpg") center/cover no-repeat;
+    border-radius:12px;
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+    transition:1.5s ease;
+    z-index:1;
+}
+
+.card.show{
+    transform:translateX(-50%) translateY(-80px);
+}
+
+/* KOPERTA */
 .envelope{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:420px;
+    height:260px;
+    z-index:5;
+}
+
+/* DÓŁ KOPERTY */
+.envelope-body{
     position:absolute;
     width:100%;
     height:100%;
     background:url("koperta.jpg") center/cover no-repeat;
-    border-radius:12px;
+    border-radius:10px;
     overflow:hidden;
-    transition:transform 1s ease;
 }
 
-/* Klapa */
+/* KLAPKA */
 .flap{
     position:absolute;
     top:0;
     left:0;
     width:100%;
-    height:50%;
+    height:130px;
     background:url("koperta.jpg") center top/cover no-repeat;
-    transform-origin:top;
-    transition:transform 1s ease;
-    z-index:2;
+    transform-origin:top center;
+    transition:1.2s ease;
+    z-index:10;
 }
 
-.envelope.open .flap{
+.flap.open{
     transform:rotateX(-180deg);
 }
 
-/* Zaproszenie */
-.card{
+/* NAPIS */
+.text{
     position:absolute;
-    top:50%;
-    left:50%;
-    width:320px;
-    height:450px;
-    background:url("zaproszenie.jpg") center/cover no-repeat;
-    border-radius:15px;
-    transform:translate(-50%,-50%) scale(0);
-    transition:0.8s;
-    box-shadow:0 0 30px rgba(255,255,255,0.3);
-}
-
-.card.show{
-    transform:translate(-50%,-50%) scale(1);
-}
-
-.info{
-    position:absolute;
-    bottom:-60px;
     width:100%;
+    top:-60px;
     text-align:center;
     color:white;
-    font-size:18px;
+    font-size:22px;
+    text-shadow:0 0 10px black;
 }
 </style>
 </head>
 <body>
 
-<!-- Film MP4 w tle -->
-<video id="bg-video" autoplay muted loop playsinline>
+<video autoplay muted loop playsinline id="bg-video">
     <source src="tlo.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<div class="container" onclick="openEnvelope()">
+<div class="container">
 
-    <div class="envelope" id="envelope">
-        <div class="flap"></div>
+    <div class="text">
+        Kliknij kopertę 💍
     </div>
 
     <div class="card" id="card"></div>
 
-    <div class="info">
-        Kliknij kopertę 💍
+    <div class="envelope" onclick="openInvitation()">
+
+        <div class="flap" id="flap"></div>
+
+        <div class="envelope-body"></div>
+
     </div>
 
 </div>
 
-<audio id="bg-music">
+<audio id="music">
     <source src="muzyka.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 let opened = false;
 
-function openEnvelope(){
+function openInvitation(){
 
     if(opened) return;
     opened = true;
 
-    document.getElementById("envelope").classList.add("open");
+    document.getElementById("flap").classList.add("open");
 
     setTimeout(() => {
         document.getElementById("card").classList.add("show");
     }, 700);
 
-    const music = document.getElementById("bg-music");
-    music.play();
+    document.getElementById("music").play();
 }
 </script>
 
