@@ -3,163 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zaproszenie Ślubne</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
 body{
+    margin:0;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:#f5f1eb;
     overflow:hidden;
-    font-family:Georgia, serif;
 }
 
-/* FILM W TLE */
-#bg-video{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
-}
+/* KONTENER */
 
-.overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.35);
-    z-index:-1;
-}
-
-/* GŁÓWNY BLOK */
 .container{
     position:relative;
-    width:420px;
-    height:500px;
+    width:500px;
+    height:400px;
 }
 
 /* ZAPROSZENIE */
+
 .card{
     position:absolute;
+    width:280px;
+    height:400px;
     left:50%;
-    bottom:120px;
-    width:320px;
-    height:450px;
-    transform:translateX(-50%) translateY(240px);
+    bottom:70px;
+    transform:translateX(-50%) translateY(220px);
     background:url("zaproszenie.jpg") center/cover no-repeat;
-    border-radius:12px;
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
-    transition:1.5s ease;
+    border-radius:8px;
+    transition:1.5s;
     z-index:1;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 .card.show{
-    transform:translateX(-50%) translateY(-80px);
+    transform:translateX(-50%) translateY(-120px);
 }
 
 /* KOPERTA */
+
 .envelope{
     position:absolute;
-    bottom:0;
+    width:400px;
+    height:250px;
     left:50%;
+    bottom:0;
     transform:translateX(-50%);
-    width:420px;
-    height:260px;
-    z-index:5;
-}
-
-/* DÓŁ KOPERTY */
-.envelope-body{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:url("koperta.jpg") center/cover no-repeat;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-/* KLAPKA */
-.flap{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:130px;
-    background:url("koperta.jpg") center top/cover no-repeat;
-    transform-origin:top center;
-    transition:1.2s ease;
+    cursor:pointer;
     z-index:10;
 }
 
-.flap.open{
-    transform:rotateX(-180deg);
-}
+/* TYŁ */
 
-/* NAPIS */
-.text{
+.back{
     position:absolute;
     width:100%;
-    top:-60px;
-    text-align:center;
-    color:white;
-    font-size:22px;
-    text-shadow:0 0 10px black;
+    height:100%;
+    background:#e7d5b7;
+    border-radius:6px;
 }
+
+/* LEWY TRÓJKĄT */
+
+.left{
+    position:absolute;
+    width:0;
+    height:0;
+    border-top:125px solid transparent;
+    border-bottom:125px solid transparent;
+    border-right:200px solid #d9c29c;
+    z-index:11;
+}
+
+/* PRAWY */
+
+.right{
+    position:absolute;
+    right:0;
+    width:0;
+    height:0;
+    border-top:125px solid transparent;
+    border-bottom:125px solid transparent;
+    border-left:200px solid #d9c29c;
+    z-index:11;
+}
+
+/* DÓŁ */
+
+.bottom{
+    position:absolute;
+    bottom:0;
+    width:0;
+    height:0;
+    border-left:200px solid transparent;
+    border-right:200px solid transparent;
+    border-top:130px solid #cdb287;
+    z-index:12;
+}
+
+/* KLAPKA */
+
+.flap{
+    position:absolute;
+    top:0;
+    width:0;
+    height:0;
+    border-left:200px solid transparent;
+    border-right:200px solid transparent;
+    border-top:130px solid #efdcbc;
+    transform-origin:top;
+    transition:1s;
+    z-index:20;
+}
+
+.flap.open{
+    transform:rotateX(180deg);
+}
+
 </style>
 </head>
+
 <body>
-
-<video autoplay muted loop playsinline id="bg-video">
-    <source src="tlo.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
 
 <div class="container">
 
-    <div class="text">
-        Kliknij kopertę 💍
-    </div>
-
     <div class="card" id="card"></div>
 
-    <div class="envelope" onclick="openInvitation()">
+    <div class="envelope" onclick="openInvite()">
 
+        <div class="back"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="bottom"></div>
         <div class="flap" id="flap"></div>
-
-        <div class="envelope-body"></div>
 
     </div>
 
 </div>
 
-<audio id="music">
-    <source src="muzyka.mp3" type="audio/mpeg">
-</audio>
-
 <script>
+
 let opened = false;
 
-function openInvitation(){
+function openInvite(){
 
     if(opened) return;
+
     opened = true;
 
     document.getElementById("flap").classList.add("open");
 
-    setTimeout(() => {
+    setTimeout(()=>{
         document.getElementById("card").classList.add("show");
-    }, 700);
-
-    document.getElementById("music").play();
+    },600);
 }
+
 </script>
 
 </body>
